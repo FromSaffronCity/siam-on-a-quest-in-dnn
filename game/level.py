@@ -32,7 +32,7 @@ class Level:
 					if col == 'X':
 						Tile((x,y),[self.visible_sprites,self.collision_sprites])
 					if col == 'P' and self.player is None:
-						self.player = Player((x,y),[self.visible_sprites,self.active_sprites],self.collision_sprites)
+						self.player = Player((x,y),[self.visible_sprites,self.active_sprites],self.collision_sprites, self.visible_sprites, self.active_sprites)
 
 	def run(self):
 		# run the entire game (level)
@@ -42,6 +42,7 @@ class Level:
 
 		if self.player.is_dead == True:
 			self.game_over = True
+
 
 class CameraGroup(pygame.sprite.Group):
 	def __init__(self):

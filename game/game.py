@@ -21,8 +21,9 @@ def take_snapshot():
 	x = np.fliplr(np.rot90(x, 3))
 	data = im.fromarray(x)
 	data.save('original.png')
-	x = x.reshape((30, 720 // 30, 30, 720 // 30, 3)).max(3).max(1)
-	# x = x.reshape((80, 720 // 80, 80, 720 // 80, 3)).max(3).max(1)
+
+	target_pixel = 30
+	x = x.reshape((target_pixel, SCREEN_HEIGHT // target_pixel, target_pixel, SCREEN_HEIGHT // target_pixel, 3)).max(3).max(1)
 	data = im.fromarray(x)
 	data.save('sampled.png')
 
@@ -72,6 +73,8 @@ def start():
 		show_text()
 
 		pygame.display.update()
+
+		# take_snapshot()
 		clock.tick(60)
 
 
