@@ -19,10 +19,9 @@ class Level:
 		self.setup_level()
 		
 
-
 	def setup_level(self):
 		
-		repeat = 50
+		repeat = 20
 
 		for i in range(repeat):
 			for row_index,row in enumerate(LEVEL_MAP):
@@ -44,9 +43,6 @@ class CameraGroup(pygame.sprite.Group):
 		super().__init__()
 		self.display_surface = pygame.display.get_surface()
 		self.offset = pygame.math.Vector2(100, -20)
-
-		# center camera setup 
-		self.half_w = self.display_surface.get_size()[0] // 3
 
 		# camera
 		cam_left = CAMERA_BORDERS['left']

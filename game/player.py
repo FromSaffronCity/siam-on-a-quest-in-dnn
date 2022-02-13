@@ -17,11 +17,6 @@ class Player(pygame.sprite.Sprite):
 		self.on_floor = False
 
 
-		# self.direction.x = 1
-
-		
-
-
 	def input(self):
 		keys = pygame.key.get_pressed()
 
@@ -29,6 +24,9 @@ class Player(pygame.sprite.Sprite):
 		if keys[pygame.K_SPACE] and self.on_floor:
 			self.direction.y = -self.jump_speed
 
+		if GAME_MODE == 1:
+			self.direction.x = 1
+			return
 
 		if keys[pygame.K_RIGHT]:
 			self.direction.x = 1

@@ -1,0 +1,22 @@
+
+
+to play game in normal mode,
+    set Config.GAME_MODE = 0
+to play game in moving mode,
+    set Config.GAME_MODE = 1
+
+
+Keys
+-----
+
+right arrow -> go right (only in normal mode)
+left arrow -> go left (only in norml mode)
+
+space -> jump
+r -> restart game from beginning
+1 -> take snapshot of current screen. 
+    original.png -> original screenshot (720x720)
+    sampled.png -> downsampled screenshot (30x30)
+    
+p -> pause / resume game
+q -> quit game
