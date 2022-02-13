@@ -1,6 +1,5 @@
 import pygame 
 from config import *
-# from game import screen
 
 class Player(pygame.sprite.Sprite):
 	def __init__(self, pos, groups, collision_sprites):
@@ -14,7 +13,11 @@ class Player(pygame.sprite.Sprite):
 		self.gravity = 0.8
 		self.jump_speed = 16
 		self.collision_sprites = collision_sprites
+
+		self.score = 0
 		self.on_floor = False
+		self.is_dead = False
+
 
 
 	def input(self):
@@ -64,14 +67,20 @@ class Player(pygame.sprite.Sprite):
 		self.rect.y += self.direction.y
 
 	def check_death(self):
-		if self.rect.y > 1000:
-			pass
+		self.is_dead = self.rect.y > 1000
 		
 
 	def update(self):
 		self.input()
+
+		prev_x = self.rect.x
 		self.rect.x += self.direction.x * self.speed
 		self.horizontal_collisions()
+
+		if self.rect.x > prev_x:
+			self.score += 1
+
+
 		self.apply_gravity()
 		self.vertical_collisions()
 		self.check_death()

@@ -16,6 +16,7 @@ class Level:
 
 
 		self.player = None
+		self.game_over = False
 		self.setup_level()
 		
 
@@ -35,14 +36,18 @@ class Level:
 
 	def run(self):
 		# run the entire game (level)
+		
 		self.active_sprites.update()
 		self.visible_sprites.custom_draw(self.player)
+
+		if self.player.is_dead == True:
+			self.game_over = True
 
 class CameraGroup(pygame.sprite.Group):
 	def __init__(self):
 		super().__init__()
 		self.display_surface = pygame.display.get_surface()
-		self.offset = pygame.math.Vector2(100, -20)
+		self.offset = pygame.math.Vector2(100, -120)
 
 		# camera
 		cam_left = CAMERA_BORDERS['left']
