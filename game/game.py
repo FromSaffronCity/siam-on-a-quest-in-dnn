@@ -61,6 +61,7 @@ def start():
 					pygame.quit()
 					sys.exit()
 				elif event.key == pygame.K_r:
+					episode_cnt = 0
 					start()
 				elif event.key == pygame.K_p:
 					game_paused ^= 1
@@ -75,7 +76,7 @@ def start():
 		pygame.display.update()
 
 		# take_snapshot()
-		clock.tick(60)
+		clock.tick(50)
 
 
 

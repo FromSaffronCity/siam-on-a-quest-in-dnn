@@ -1,5 +1,5 @@
 
-LEVEL_MAP1 = [
+LEVEL_MAP_v1 = [
 '                           ',
 '                           ',
 '                           ',
@@ -16,10 +16,10 @@ LEVEL_MAP1 = [
 LEVEL_MAP = [
 '                                ',
 '                                ',
-'                       XXXXXXXXX',
+'             XXXX      XXXXXXXXX',
+'                             X  ',
 '       XXXX                  X  ',
 '  P                          X  ',
-'XXXXX                        X  ',
 ' XXXX       XXX           XXXXXX',
 ' XX       XXXX             X  X ',
 '          XXXX    XX XXXXXXXXXXX',

@@ -13,6 +13,7 @@ right arrow -> go right (only in normal mode)
 left arrow -> go left (only in norml mode)
 
 space -> jump
+tab -> shoot
 r -> restart game from beginning
 1 -> take snapshot of current screen. 
     original.png -> original screenshot (720x720)
