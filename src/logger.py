@@ -1,7 +1,7 @@
 import os
+import csv
 import time
-# import matplotlib.pyplot as plt
-# import csv
+import datetime
 
 class MetricLogger:
     def __init__(self, logdir):
@@ -9,20 +9,15 @@ class MetricLogger:
             os.makedirs(logdir)
 
         self.log_file_name = f'{logdir}/log.csv'
-        self.fields = ['Episode', 'Step', 'Epsilon', 'Avg Reward', 'Avg Length', 'Avg Loss', 'Avg Q Value', 'Time Delta', 'Time']
-        self.episode_rewards_plot = f'{logdir}/rewards.jpg'
-        self.episode_lengths_plot = f'{logdir}/lengths.jpg'
-        self.episode_avg_losses_plot = f'{logdir}/losses.jpg'
-        self.episode_avg_q_values_plot = f'{logdir}/Qvalues.jpg'
+
+        with open(self.log_file_name, 'w') as log_file:
+            csv_writer = csv.writer(log_file)
+            csv_writer.writerow(['Episode', 'Step', 'Epsilon', 'Avg Reward', 'Avg Length', 'Avg Loss', 'Avg Q Value', 'Time Delta', 'Current Time'])
 
         self.episode_rewards = []
         self.episode_lengths = []
         self.episode_avg_losses = []
         self.episode_avg_q_values = []
-        self.moving_avg_episode_rewards = []
-        self.moving_avg_episode_lengths = []
-        self.moving_avg_episode_avg_losses = []
-        self.moving_avg_episode_avg_q_values = []
 
         self.current_episode_reward = self.current_episode_length = self.current_episode_loss = self.current_episode_q_value = self.current_episode_loss_length = 0
 
@@ -48,41 +43,18 @@ class MetricLogger:
         self.episode_avg_q_values.append(0 if self.current_episode_loss_length == 0 else round(self.current_episode_q_value / self.current_episode_loss_length, ndigits=5))
         self.init_episode()
 
-    def record(self, episode, epsilon, step):
-        mean_ep_reward = np.round(np.mean(self.ep_rewards[-100:]), 3)
-        mean_ep_length = np.round(np.mean(self.ep_lengths[-100:]), 3)
-        mean_ep_loss = np.round(np.mean(self.ep_avg_losses[-100:]), 3)
-        mean_ep_q = np.round(np.mean(self.ep_avg_qs[-100:]), 3)
-        self.moving_avg_ep_rewards.append(mean_ep_reward)
-        self.moving_avg_ep_lengths.append(mean_ep_length)
-        self.moving_avg_ep_avg_losses.append(mean_ep_loss)
-        self.moving_avg_ep_avg_qs.append(mean_ep_q)
+    def record(self, episode, step, epsilon):
+        mean_episode_reward = round(0 if len(self.episode_rewards[-100:]) == 0 else sum(self.episode_rewards[-100:]) / len(self.episode_rewards[-100:]), ndigits=3)
+        mean_episode_length = round(0 if len(self.episode_lengths[-100:]) == 0 else sum(self.episode_lengths[-100:]) / len(self.episode_lengths[-100:]), ndigits=3)
+        mean_episode_avg_loss = round(0 if len(self.episode_avg_losses[-100:]) == 0 else sum(self.episode_avg_losses[-100:]) / len(self.episode_avg_losses[-100:]), ndigits=3)
+        mean_episode_avg_q_value = round(0 if len(self.episode_avg_q_values[-100:]) == 0 else sum(self.episode_avg_q_values[-100:]) / len(self.episode_avg_q_values[-100:]), ndigits=3)
 
         last_record_time = self.record_time
         self.record_time = time.time()
-        time_since_last_record = np.round(self.record_time - last_record_time, 3)
+        time_spent_after_last_record = round(self.record_time - last_record_time, ndigits=3)
 
-        print(
-            f"Episode {episode} - "
-            f"Step {step} - "
-            f"Epsilon {epsilon} - "
-            f"Mean Reward {mean_ep_reward} - "
-            f"Mean Length {mean_ep_length} - "
-            f"Mean Loss {mean_ep_loss} - "
-            f"Mean Q Value {mean_ep_q} - "
-            f"Time Delta {time_since_last_record} - "
-            f"Time {datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S')}"
-        )
+        print(f'Episode: {episode} - Step: {step} - Epsilon: {epsilon} - Avg Reward: {mean_episode_reward} - Avg Length: {mean_episode_length} - Avg Loss: {mean_episode_avg_loss} - Avg Q Value: {mean_episode_avg_q_value} - Time Delta: {time_spent_after_last_record} - Current Time: {datetime.datetime.now().strftime("%Y/%m/%d(%a)@%H:%M:%S")}')
 
-        with open(self.save_log, "a") as f:
-            f.write(
-                f"{episode:8d}{step:8d}{epsilon:10.3f}"
-                f"{mean_ep_reward:15.3f}{mean_ep_length:15.3f}{mean_ep_loss:15.3f}{mean_ep_q:15.3f}"
-                f"{time_since_last_record:15.3f}"
-                f"{datetime.datetime.now().strftime('%Y-%m-%dT%H:%M:%S'):>20}\n"
-            )
-
-        for metric in ["ep_rewards", "ep_lengths", "ep_avg_losses", "ep_avg_qs"]:
-            plt.plot(getattr(self, f"moving_avg_{metric}"))
-            plt.savefig(getattr(self, f"{metric}_plot"))
-            plt.clf()
+        with open(self.log_file_name, 'a') as log_file:
+            csv_writer = csv.writer(log_file)
+            csv_writer.writerow([episode, step, epsilon, mean_episode_reward, mean_episode_length, mean_episode_avg_loss, mean_episode_avg_q_value, time_spent_after_last_record, datetime.datetime.now().strftime("%Y/%m/%d(%a)@%H:%M:%S")])
