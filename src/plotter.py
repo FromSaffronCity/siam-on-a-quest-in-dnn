@@ -8,7 +8,7 @@ def plot(scores, avg_scores):
     display.clear_output(wait=True)
     plt.clf()
     plt.title('Training...')
-    plt.xlabel('Number of Games')
+    plt.xlabel('Number of Episodes')
     plt.ylabel('Score')
     plt.plot(scores, color='darkturquoise')
     plt.plot(avg_scores, color='darkorange')

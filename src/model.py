@@ -6,7 +6,7 @@ import os
 class SiamNet(nn.Module):
     def __init__(self, input_dim, hidden_dim, output_dim):
         super(SiamNet, self).__init__()
-        height, width, channels = input_dim
+        channels, height, width = input_dim
 
         assert height == 84, f'Expected height 84. Input height {height}.'
         assert width == 84, f'Expected width 84. Input width {width}.'
