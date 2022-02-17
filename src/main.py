@@ -1,7 +1,7 @@
 import numpy as np
 import datetime
 
-from ..game.game import Game
+from src.game.game import Game
 from agent import Siam
 from logger import MetricLogger
 from plotter import plot
