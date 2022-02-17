@@ -18,6 +18,8 @@ class Level:
 		self.player = None
 		self.game_over = False
 		self.setup_level()
+
+
 		
 
 	def setup_level(self):
@@ -34,11 +36,15 @@ class Level:
 					if col == 'P' and self.player is None:
 						self.player = Player((x,y),[self.visible_sprites,self.active_sprites],self.collision_sprites, self.visible_sprites, self.active_sprites)
 
-	def run(self):
+	def run(self, action):
 		# run the entire game (level)
-		
+
+		self.player.intended_action = action
+
 		self.active_sprites.update()
 		self.visible_sprites.custom_draw(self.player)
+
+		self.player.intended_action = -1
 
 		if self.player.is_dead == True:
 			self.game_over = True

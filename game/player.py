@@ -10,6 +10,7 @@ class Player(pygame.sprite.Sprite):
 		self.rect = self.image.get_rect(topleft = pos)
 
 		self.direction = pygame.math.Vector2()
+		self.direction.x = 1
 		self.speed = 6
 		self.gravity = 0.8
 		self.jump_speed = 16
@@ -22,29 +23,25 @@ class Player(pygame.sprite.Sprite):
 		self.is_dead = False
 
 		self.shoot_cooldown = 0
+		self.intended_action = -1
 
 
 
-	def input(self):
-		keys = pygame.key.get_pressed()
-
-
-		if keys[pygame.K_SPACE] and self.on_floor:
-			self.direction.y = -self.jump_speed
-
-		if keys[pygame.K_TAB]:
-			self.shoot()
-
+	def apply_intended_action(self):
 		if GAME_MODE == 1:
-			self.direction.x = 1
-			return
-
-		if keys[pygame.K_RIGHT]:
-			self.direction.x = 1
-		elif keys[pygame.K_LEFT]:
-			self.direction.x = -1
+			if self.intended_action == JUMP and self.on_floor:
+				self.direction.y = -self.jump_speed
+			if self.intended_action == SHOOT:
+				self.shoot()
 		else:
-			self.direction.x = 0
+			keys = pygame.key.get_pressed()
+
+			if keys[pygame.K_SPACE] and self.on_floor:
+				self.direction.y = -self.jump_speed
+
+			if keys[pygame.K_TAB]:
+				self.shoot()
+
 
 	
 	def shoot(self):
@@ -64,7 +61,7 @@ class Player(pygame.sprite.Sprite):
 				if self.direction.x > 0: 
 					self.rect.right = sprite.rect.left
 
-				self.is_dead = True
+				self.is_dead |= True
 
 
 	def vertical_collisions(self):
@@ -94,10 +91,11 @@ class Player(pygame.sprite.Sprite):
 	def update(self):
 
 
+
 		if self.shoot_cooldown > 0:
 			self.shoot_cooldown -= 1
 
-		self.input()
+		self.apply_intended_action()
 
 		prev_x = self.rect.x
 		self.rect.x += self.direction.x * self.speed
