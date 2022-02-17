@@ -15,17 +15,20 @@ episode_cnt = 0
 level = None
 
 
+
+def printImage(display_matrix):
+	image = im.fromarray(display_matrix)
+	image.save('original.png')
+
+
 def take_snapshot():
 	surf = pygame.display.get_surface()
-	x = pygame.surfarray.array3d(surf)
-	x = np.fliplr(np.rot90(x, 3))
-	data = im.fromarray(x)
-	data.save('original.png')
+	display_matrix = pygame.surfarray.array3d(surf)
+	display_matrix = np.fliplr(np.rot90(display_matrix, 3))
+	
+	display_matrix = display_matrix.reshape((SHRINK_HEIGHT, SCREEN_HEIGHT // SHRINK_HEIGHT, SHRINK_HEIGHT, SCREEN_HEIGHT // SHRINK_HEIGHT, 3)).max(3).max(1)
+	return display_matrix
 
-	target_pixel = 30
-	x = x.reshape((target_pixel, SCREEN_HEIGHT // target_pixel, target_pixel, SCREEN_HEIGHT // target_pixel, 3)).max(3).max(1)
-	data = im.fromarray(x)
-	data.save('sampled.png')
 
 
 def show_text():
@@ -58,6 +61,11 @@ def start():
 				if event.key == pygame.K_1:
 					take_snapshot()
 				elif event.key == pygame.K_q:
+
+					# for (id, frame) in enumerate(all_frames):
+					# 	image = im.fromarray(frame)
+					# 	image.save(f"img/original{id}.png")
+
 					pygame.quit()
 					sys.exit()
 				elif event.key == pygame.K_r:
@@ -75,8 +83,8 @@ def start():
 
 		pygame.display.update()
 
-		# take_snapshot()
-		clock.tick(50)
+		take_snapshot()
+		clock.tick()
 
 
 
