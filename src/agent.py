@@ -12,13 +12,13 @@ class Siam:
         self.state_dim = state_dim
         self.action_dim = action_dim
         self.use_cuda = torch.cuda.is_available()
-        self.model = SiamNet(input_dim=self.state_dim, hidden_dim=512, output_dim=self.action_dim).float()
+        self.model = SiamNet(input_dim=self.state_dim, hidden_dim=512, output_dim=self.action_dim).double()
 
         if self.use_cuda:
             self.model = self.model.to(device='cuda')
 
         self.exploration_rate = 1
-        self.exploration_rate_decay = 0.99999975
+        self.exploration_rate_decay = 0.99995
         self.exploration_rate_min = 0.01
         self.current_step = 0
 
@@ -30,9 +30,9 @@ class Siam:
         self.optimizer = optim.Adam(self.model.parameters(), lr=0.001)
         self.loss = nn.SmoothL1Loss()
 
-        self.min_experience_before_training = int(1e4)
+        self.min_experience_before_training = self.batch_size * 10
         self.learn_every = 3
-        self.sync_every = int(1e4)
+        self.sync_every = int(1e3)
 
     def act(self, state):
         if np.random.rand() < self.exploration_rate:
@@ -71,7 +71,7 @@ class Siam:
     def compute_td_target(self, next_state, reward, game_over):
         next_action = torch.argmax(self.model(next_state, model='online'), dim=1)
         next_q_value = self.model(next_state, model='target')[np.arange(0, self.batch_size), next_action]
-        return (reward + (1 - game_over.float()) * self.discount_rate * next_q_value).float()
+        return (reward + (1 - game_over.double()) * self.discount_rate * next_q_value).double()
 
     def update_q_online(self, td_estimate, td_target):
         loss = self.loss(td_estimate, td_target)
@@ -86,7 +86,7 @@ class Siam:
     def learn(self):
         if self.current_step < self.min_experience_before_training:
             return None, None
-        if self.current_step % self.learn_every != 0:
+        if self.current_step % self.min_experience_before_training != 0:
             return None, None
         if self.current_step % self.sync_every == 0:
             self.sync_q_target()

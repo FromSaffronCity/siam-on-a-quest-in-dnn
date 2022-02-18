@@ -31,7 +31,7 @@ class MetricLogger:
         self.current_episode_reward = self.current_episode_reward + reward
         self.current_episode_length = self.current_episode_length + 1
 
-        if not loss == 0:
+        if loss:
             self.current_episode_loss = self.current_episode_loss + loss
             self.current_episode_q_value = self.current_episode_q_value + q_value
             self.current_episode_loss_length = self.current_episode_loss_length + 1

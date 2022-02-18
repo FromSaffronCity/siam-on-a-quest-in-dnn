@@ -1,12 +1,13 @@
-import pygame 
-from src.game.config import *
+import pygame
+from game.config import *
+
 
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites):
         super().__init__(groups)
-        self.image = pygame.Surface((BULLET_SIZE , BULLET_SIZE))
+        self.image = pygame.Surface((BULLET_SIZE, BULLET_SIZE))
         self.image.fill(BULLET_COLOR)
-        self.rect = self.image.get_rect(topleft = pos)
+        self.rect = self.image.get_rect(topleft=pos)
 
         self.collision_sprites = collision_sprites
         self.speed = 12
@@ -28,7 +29,3 @@ class Bullet(pygame.sprite.Sprite):
             return
 
         self.grid_collisions()
-
-    
-
-
