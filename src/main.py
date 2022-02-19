@@ -1,7 +1,6 @@
 import numpy as np
 import datetime
 
-
 from game.game import Game
 from agent.agent import Siam
 from utils.logger import MetricLogger

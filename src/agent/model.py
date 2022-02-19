@@ -8,18 +8,20 @@ class SiamNet(nn.Module):
         super(SiamNet, self).__init__()
         channels, height, width = input_dim
 
-        assert height == 84, f'Expected height 84. Input height {height}.'
-        assert width == 84, f'Expected width 84. Input width {width}.'
+        assert height == 32, f'Expected height 32. Input height {height}.'
+        assert width == 32, f'Expected width 32. Input width {width}.'
 
         self.online = nn.Sequential(
-            nn.Conv2d(in_channels=channels, out_channels=32, kernel_size=(8, 8), stride=(4, 4)),
+            nn.Conv2d(in_channels=channels, out_channels=16, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2)),
             nn.ReLU(),
-            nn.Conv2d(in_channels=32, out_channels=64, kernel_size=(4, 4), stride=(2, 2)),
+            nn.MaxPool2d(kernel_size=(2, 2), stride=(2, 2)),
+            nn.Conv2d(in_channels=16, out_channels=32, kernel_size=(5, 5), stride=(1, 1), padding=(0, 0)),
             nn.ReLU(),
-            nn.Conv2d(in_channels=64, out_channels=64, kernel_size=(3, 3), stride=(1, 1)),
+            nn.MaxPool2d(kernel_size=(2, 2), stride=(2, 2)),
+            nn.Conv2d(in_channels=32, out_channels=64, kernel_size=(5, 5), stride=(1, 1), padding=(0, 0)),
             nn.ReLU(),
             nn.Flatten(),
-            nn.Linear(3136, hidden_dim),
+            nn.Linear(256, hidden_dim),
             nn.ReLU(),
             nn.Linear(hidden_dim, output_dim)
         )

@@ -3,8 +3,12 @@ import sys
 import numpy as np
 from PIL import Image
 
-from level import Level
-from config import *
+if __name__ == 'game_helper':
+    from config import *
+    from level import Level
+elif __name__ == 'game.game_helper':
+    from .config import *
+    from .level import Level
 
 pygame.init()
 screen = pygame.display.set_mode((SCREEN_HEIGHT, SCREEN_HEIGHT))

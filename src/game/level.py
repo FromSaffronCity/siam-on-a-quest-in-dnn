@@ -1,18 +1,16 @@
 import pygame
 
-
-
-if __name__ == '__main__':
+if __name__ == 'level':
+    from config import *
     from tile import Tile
     from player import Player
-else :
-    from game.tile import Tile
-    from game.player import Player
-
+elif __name__ == 'game.level':
+    from .config import *
+    from .tile import Tile
+    from .player import Player
 
 class Level:
     def __init__(self):
-
         # level setup
         self.display_surface = pygame.display.get_surface()
 
@@ -26,7 +24,6 @@ class Level:
         self.setup_level()
 
     def setup_level(self):
-
         repeat = 20
 
         for i in range(repeat):
@@ -37,8 +34,7 @@ class Level:
                     if col == 'X':
                         Tile((x, y), [self.visible_sprites, self.collision_sprites])
                     if col == 'P' and self.player is None:
-                        self.player = Player((x, y), [self.visible_sprites, self.active_sprites],
-                                             self.collision_sprites, self.visible_sprites, self.active_sprites)
+                        self.player = Player((x, y), [self.visible_sprites, self.active_sprites], self.collision_sprites, self.visible_sprites, self.active_sprites)
 
     def run(self, action):
         # run the entire game (level)

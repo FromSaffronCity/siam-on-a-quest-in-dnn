@@ -5,8 +5,8 @@ import numpy as np
 from collections import deque
 import random
 
-
-from agent.model import SiamNet
+if __name__ == 'agent.agent':
+    from .model import SiamNet
 
 class Siam:
     def __init__(self, state_dim, action_dim):
@@ -19,7 +19,7 @@ class Siam:
             self.model = self.model.to(device='cuda')
 
         self.exploration_rate = 1
-        self.exploration_rate_decay = 0.99999975
+        self.exploration_rate_decay = 0.9999975
         self.exploration_rate_min = 0.01
         self.current_step = 0
 

@@ -1,11 +1,9 @@
 import pygame
 
-
-if __name__ == '__main__':
+if __name__ == 'bullet':
     from config import *
-else :
-    from game.config import *
-
+elif __name__ == 'game.bullet':
+    from .config import *
 
 class Bullet(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites):
@@ -19,7 +17,6 @@ class Bullet(pygame.sprite.Sprite):
         self.init_x = pos[0]
 
     def grid_collisions(self):
-
         for sprite in self.collision_sprites.sprites():
             if sprite.rect.colliderect(self.rect):
                 sprite.kill()

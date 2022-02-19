@@ -3,13 +3,12 @@ import sys
 import numpy as np
 from PIL import Image
 
-
 if __name__ == '__main__':
     from level import Level
     from config import *
-else :
-    from game.level import Level
-    from game.config import *
+elif __name__ == 'game.game':
+    from .level import Level
+    from .config import *
 
 class Game:
     def __init__(self):
@@ -39,9 +38,7 @@ class Game:
         display_matrix = pygame.surfarray.array3d(surf)
         display_matrix = np.fliplr(np.rot90(display_matrix, 3))
 
-        display_matrix = display_matrix.reshape(
-            (SHRINK_HEIGHT, SCREEN_HEIGHT // SHRINK_HEIGHT, SHRINK_HEIGHT, SCREEN_HEIGHT // SHRINK_HEIGHT, 3)).max(
-            3).max(1)
+        display_matrix = display_matrix.reshape((SHRINK_HEIGHT, SCREEN_HEIGHT // SHRINK_HEIGHT, SHRINK_HEIGHT, SCREEN_HEIGHT // SHRINK_HEIGHT, 3)).max(3).max(1)
         return display_matrix
 
     def reset(self):

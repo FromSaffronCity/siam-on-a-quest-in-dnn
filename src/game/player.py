@@ -1,13 +1,11 @@
 import pygame
 
-
-if __name__ == '__main__':
+if __name__ == 'player':
     from config import *
     from bullet import Bullet
-else:
-    from game.config import *
-    from game.bullet import Bullet
-
+elif __name__ == 'game.player':
+    from .config import *
+    from .bullet import Bullet
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites, visible_sprites, active_sprites):
@@ -86,7 +84,6 @@ class Player(pygame.sprite.Sprite):
         self.is_dead |= self.rect.y > 1000
 
     def update(self):
-
         if self.shoot_cooldown > 0:
             self.shoot_cooldown -= 1
 

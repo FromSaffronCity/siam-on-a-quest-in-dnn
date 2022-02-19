@@ -1,16 +1,13 @@
-
-
 to play game in normal mode,
     set Config.GAME_MODE = 0
 to play game in moving mode,
     set Config.GAME_MODE = 1
 
-
 Keys
 -----
 
 right arrow -> go right (only in normal mode)
-left arrow -> go left (only in norml mode)
+left arrow -> go left (only in normal mode)
 
 space -> jump
 tab -> shoot
