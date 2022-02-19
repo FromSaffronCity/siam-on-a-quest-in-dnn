@@ -30,16 +30,16 @@ class Player(pygame.sprite.Sprite):
         if GAME_MODE == 1:
             if self.intended_action == JUMP and self.on_floor:
                 self.direction.y = -self.jump_speed
-            if self.intended_action == SHOOT:
-                self.shoot()
+            # if self.intended_action == SHOOT:
+            #     self.shoot()
         else:
             keys = pygame.key.get_pressed()
 
             if keys[pygame.K_SPACE] and self.on_floor:
                 self.direction.y = -self.jump_speed
 
-            if keys[pygame.K_TAB]:
-                self.shoot()
+            # if keys[pygame.K_TAB]:
+            #     self.shoot()
 
     def shoot(self):
         if self.shoot_cooldown > 0:
