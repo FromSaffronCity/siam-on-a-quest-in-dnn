@@ -4,11 +4,11 @@ import time
 import datetime
 
 class MetricLogger:
-    def __init__(self, logdir):
+    def __init__(self, logdir, filename):
         if not os.path.exists(logdir):
             os.makedirs(logdir)
 
-        self.log_file_name = f'{logdir}/log.csv'
+        self.log_file_name = f'{logdir}/{filename}'
 
         with open(self.log_file_name, 'w') as log_file:
             csv_writer = csv.writer(log_file)

@@ -3,8 +3,8 @@ import sys
 import numpy as np
 from PIL import Image
 
-from game.level import Level
-from game.config import *
+from level import Level
+from config import *
 
 pygame.init()
 screen = pygame.display.set_mode((SCREEN_HEIGHT, SCREEN_HEIGHT))

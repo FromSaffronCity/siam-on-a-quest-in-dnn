@@ -1,6 +1,9 @@
 import pygame
 
-from game.config import *
+if __name__ == '__main__':
+    from config import *
+else:
+    from game.config import *
 
 class Tile(pygame.sprite.Sprite):
     def __init__(self, pos, groups):

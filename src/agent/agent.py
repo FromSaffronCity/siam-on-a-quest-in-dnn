@@ -86,7 +86,7 @@ class Siam:
     def learn(self):
         if self.current_step < self.min_experience_before_training:
             return None, None
-        if self.current_step % self.min_experience_before_training != 0:
+        if self.current_step % self.learn_every != 0:
             return None, None
         if self.current_step % self.sync_every == 0:
             self.sync_q_target()

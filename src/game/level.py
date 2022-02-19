@@ -1,8 +1,14 @@
 import pygame
 
-from game.config import *
-from game.tile import Tile
-from game.player import Player
+
+
+if __name__ == '__main__':
+    from tile import Tile
+    from player import Player
+else :
+    from game.tile import Tile
+    from game.player import Player
+
 
 class Level:
     def __init__(self):

@@ -34,8 +34,8 @@ class SiamNet(nn.Module):
         elif model == 'target':
             return self.target(x)
 
-    def save(self, filename='model.pt'):
-        if not os.path.exists('../models'):
-            os.makedirs('../models')
+    def save(self, modeldir, filename, current_episode):
+        if not os.path.exists(modeldir):
+            os.makedirs(modeldir)
 
-        torch.save(self.state_dict(), f'../models/{filename}')
+        torch.save(dict(model=self.state_dict(), current_episode=current_episode), f'{modeldir}/{filename}')

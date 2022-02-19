@@ -3,8 +3,13 @@ import sys
 import numpy as np
 from PIL import Image
 
-from game.level import Level
-from game.config import *
+
+if __name__ == '__main__':
+    from level import Level
+    from config import *
+else :
+    from game.level import Level
+    from game.config import *
 
 class Game:
     def __init__(self):
@@ -53,7 +58,8 @@ class Game:
                 sys.exit()
             if event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_1:
-                    self.take_snapshot()
+                    image = self.take_snapshot()
+                    self.print_image(image)
                 elif event.key == pygame.K_q:
                     pygame.quit()
                     sys.exit()
@@ -64,7 +70,6 @@ class Game:
                     self.game_paused ^= 1
 
     def step(self, action):
-
         self.handle_user_input()
 
         if self.game_paused:

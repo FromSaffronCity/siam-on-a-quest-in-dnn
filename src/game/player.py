@@ -1,7 +1,13 @@
 import pygame
 
-from game.config import *
-from game.bullet import Bullet
+
+if __name__ == '__main__':
+    from config import *
+    from bullet import Bullet
+else:
+    from game.config import *
+    from game.bullet import Bullet
+
 
 class Player(pygame.sprite.Sprite):
     def __init__(self, pos, groups, collision_sprites, visible_sprites, active_sprites):
