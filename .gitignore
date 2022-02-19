@@ -1,5 +1,7 @@
 venv/
 __pycache__/
-tempCodeRunnerFile.py
-__pycache__/
 .idea/
+tempCodeRunnerFile.py
+original.png
+logs/
+models/
