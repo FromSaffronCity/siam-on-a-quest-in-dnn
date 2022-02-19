@@ -5,7 +5,8 @@ import numpy as np
 from collections import deque
 import random
 
-from model import SiamNet
+
+from agent.model import SiamNet
 
 class Siam:
     def __init__(self, state_dim, action_dim):
