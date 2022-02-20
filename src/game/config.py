@@ -3,6 +3,20 @@ LEVEL_MAP = [
     '                                ',
     '             XXXX      XXXXXXXXX',
     '                                ',
+    '       XXXXX                    ',
+    '  P                             ',
+    ' XXXX                     XXXXXX',
+    '          XXXXX                 ',
+    '    XXXX  XXXX    XX XXXXXXXXXXX',
+    '    XXXX  XXX     XX XXXXXXXXXXX',
+    'XXXXXXXX  XX      XX XXXXXXXXXXX'
+]
+
+LEVEL_MAP_PREVIOUS = [
+    '                                ',
+    '                                ',
+    '             XXXX      XXXXXXXXX',
+    '                                ',
     '       XXXX                     ',
     '  P                             ',
     ' XXXX       XXX           XXXXXX',

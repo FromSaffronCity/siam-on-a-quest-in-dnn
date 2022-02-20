@@ -19,8 +19,8 @@ class Siam:
             self.model = self.model.to(device='cuda')
 
         self.exploration_rate = 1
-        self.exploration_rate_decay = 0.9999975
-        self.exploration_rate_min = 0.01
+        self.exploration_rate_decay = 0.99999975
+        self.exploration_rate_min = 0.1
         self.current_step = 0
 
         self.replay_buffer = deque(maxlen=int(1e5))
