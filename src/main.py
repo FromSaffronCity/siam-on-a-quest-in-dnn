@@ -33,7 +33,7 @@ def train():
     take_snapshot = False
 
     for episode in range(num_episodes):
-        initial_frame = game.reset()
+        initial_frame = game.reset(episode + 1)
         frames = [np.zeros(initial_frame.shape)] * (num_frames - 1) + [initial_frame / 255]
         state = generate_state(frames)
 
@@ -54,7 +54,7 @@ def train():
             game_over = False
 
             for skip in range(num_skips):
-                next_frame, reward, game_over, score = game.step(action)
+                next_frame, reward, game_over, score = game.step(action, episode + 1)
                 frames.append(next_frame / 255)
                 total_reward = total_reward + reward
 
@@ -110,7 +110,7 @@ def play():
     siam.exploration_rate = current_exploration_rate
 
     for episode in range(num_episodes):
-        initial_frame = game.reset()
+        initial_frame = game.reset(current_episode + episode + 1)
         frames = [np.zeros(initial_frame.shape)] * (num_frames - 1) + [initial_frame / 255]
         state = generate_state(frames)
 
@@ -122,7 +122,7 @@ def play():
             game_over = False
 
             for skip in range(num_skips):
-                next_frame, reward, game_over, score = game.step(action)
+                next_frame, reward, game_over, score = game.step(action, current_episode + episode + 1)
                 frames.append(next_frame / 255)
                 total_reward = total_reward + reward
 

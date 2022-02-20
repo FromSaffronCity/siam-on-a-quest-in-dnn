@@ -17,7 +17,7 @@ class Game:
         pygame.display.set_caption("Siam On A Quest")
         self.clock = pygame.time.Clock()
         self.font = pygame.font.Font('freesansbold.ttf', 20)
-        self.episode_cnt = 0
+        # self.episode_cnt = 0
         self.level = None
 
         self.game_paused = 0
@@ -26,8 +26,8 @@ class Game:
         image = Image.fromarray(display_matrix)
         image.save('original.png')
 
-    def show_text(self):
-        episode_txt = self.font.render(f"Episode: {self.episode_cnt}", True, (255, 255, 255))
+    def show_text(self, episode):
+        episode_txt = self.font.render(f"Episode: {episode}", True, (255, 255, 255))
         self.screen.blit(episode_txt, (10, 10))
 
         score_txt = self.font.render(f"Score: {self.level.player.score // 5}", True, (255, 255, 255))
@@ -41,11 +41,10 @@ class Game:
         display_matrix = display_matrix.reshape((SHRINK_HEIGHT, SCREEN_HEIGHT // SHRINK_HEIGHT, SHRINK_HEIGHT, SCREEN_HEIGHT // SHRINK_HEIGHT, 3)).max(3).max(1)
         return display_matrix
 
-    def reset(self):
+    def reset(self, episode):
         self.level = Level()
         self.game_paused = 0
-        self.episode_cnt += 1
-        self.step(0)
+        self.step(0, episode)
         return self.take_snapshot()
 
     def handle_user_input(self):
@@ -61,12 +60,12 @@ class Game:
                     pygame.quit()
                     sys.exit()
                 elif event.key == pygame.K_r:
-                    self.episode_cnt = 0
-                    self.reset()
+                    # self.episode_cnt = 0
+                    self.reset(1)
                 elif event.key == pygame.K_p:
                     self.game_paused ^= 1
 
-    def step(self, action):
+    def step(self, action, episode):
         self.handle_user_input()
 
         if self.game_paused:
@@ -74,7 +73,7 @@ class Game:
 
         self.screen.fill(BG_COLOR)
         self.level.run(action)
-        self.show_text()
+        self.show_text(episode)
 
         pygame.display.update()
 
@@ -91,12 +90,14 @@ class Game:
 
 if __name__ == '__main__':
     game = Game()
+    count = 1
 
     while True:
-        init_state = game.reset()
+        init_state = game.reset(count)
         game.print_image(init_state)
         while True:
             action = 1
-            (next_state, reward, done, score) = game.step(action)
+            (next_state, reward, done, score) = game.step(action, count)
+            count = count + 1
             if done:
                 break
