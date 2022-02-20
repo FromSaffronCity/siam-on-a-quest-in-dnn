@@ -91,7 +91,11 @@ def train():
             metric_logger.record(episode=episode, step=siam.current_step, epsilon=siam.exploration_rate)
 
 def play():
-    checkpoint_path = '../models/models_2022.02.20(Sun)@15.45.25/model_2022.02.20(Sun)@20.06.55.pt'
+
+    folder_name = "models_2022.02.20(Sun)@15.45.25"
+    file_name = "model_2022.02.20Sun20.06.55.pt"
+    checkpoint_path = os.path.abspath(f"../models/{folder_name}")
+    checkpoint_path = f"{checkpoint_path}/{file_name}"
     checkpoint = torch.load(checkpoint_path)
 
     model = checkpoint['model'] if 'model' in checkpoint else None
