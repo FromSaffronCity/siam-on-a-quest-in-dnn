@@ -90,12 +90,12 @@ def train():
         if episode % 40 == 0:
             metric_logger.record(episode=episode, step=siam.current_step, epsilon=siam.exploration_rate)
 
-def play():
-    folder_name = "models_2022.02.20(Sun)@15.45.25"
-    file_name = "model_2022.02.20(Sun)@20.06.55.pt"
-    checkpoint_path = os.path.abspath(f"../models/{folder_name}")
-    checkpoint_path = f"{checkpoint_path}/{file_name}"
-    print(checkpoint_path)
+def play(do_explore=False):
+    checkpointdir = 'models_2022.02.20(Sun)@15.45.25'
+    checkpoint_file = 'model_2022.02.20(Sun)@20.06.55.pt'
+
+    checkpoint_path = os.path.abspath(f'../models/{checkpointdir}')
+    checkpoint_path = f'{checkpoint_path}/{checkpoint_file}'
     checkpoint = torch.load(checkpoint_path)
 
     model = checkpoint['model'] if 'model' in checkpoint else None
@@ -111,7 +111,7 @@ def play():
 
     siam.model.load_state_dict(model)
     siam.model.eval()
-    siam.exploration_rate = current_exploration_rate
+    siam.exploration_rate = current_exploration_rate if do_explore else -1
 
     for episode in range(num_episodes):
         initial_frame = game.reset(current_episode + episode + 1)
@@ -146,4 +146,4 @@ if __name__ == '__main__':
     if do_train:
         train()
     else:
-        play()
+        play(do_explore=True)
