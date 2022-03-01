@@ -21,3 +21,4 @@ Siam on a Quest is a platform game inspired from Mario Bros. The objective of th
 - Press `P` for pausing/resuming the game.  
 - Press `Q` for quitting the game.  
 - Press :one: for taking snapshot of current game frame.  
+

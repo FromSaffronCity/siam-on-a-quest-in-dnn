@@ -141,7 +141,7 @@ def play(do_explore=False):
                 break
 
 if __name__ == '__main__':
-    do_train = False
+    do_train = True
 
     if do_train:
         train()
